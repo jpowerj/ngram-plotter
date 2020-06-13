@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Ngram Plotter</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="ngram/js/textlab-plot.js"></script>
+    <script src="ngram/js/svg-to-png.js"></script>
+</head>
+
+<body>
+    %#template for word plots
+    %#takes list of words
+
+    %# HTML Style Code
+    <style media="screen" type="text/css">
+        #content {
+            height: 90%;
+        }
+
+        #left {
+            float: left;
+            width: 60%;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #right {
+            float: left;
+            width: 40%;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .alert {
+            margin-bottom: 0;
+        }
+
+        .close {
+            float: none;
+            position: absolute;
+            right: 10px;
+            top: 0%;
+            margin-bottom: 0;
+        }
+
+        ul {
+            margin-bottom: 0;
+        }
+
+        .top-buffer {
+            margin-top: 20px;
+        }
+
+        .gram-plot {
+            text-align: center;
+        }
+
+        .download {
+            text-align: center;
+        }
+    </style>
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>State Laws N-Gram Viewer (Beta)</h3><br>
+                <h5>Elliott Ash, Suresh Naidu, and Joseph Sutherland<br>
+                    Princeton University and Columbia University</h5><br>
+                Plotted Words: {{figname}}<br>
+            </div>
+        </div>
+        % if 'err' in locals() and err != "":
+        <div class="row justify-content-center top-buffer">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="alert alert-danger alert-dismissable" role="alert">
+                    {{!err}}
+                    <a href="#" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        % end
+        <div class="row justify-content-center">
+            <div class="col-md-12 mx-auto">
+                <hr>
+
+                <h3 class="text-center">{{titles['google']}}</h3>
+                <div id="google-graph" class="gram-plot"></div>
+                <script>
+                    var google_data = "{{csv_data['google']}}";
+                    plotData(google_data, "google-graph", "Frequency", false, 960, 500);
+                </script>
+                <div class="download">
+                    <a href="#" onclick="downloadCSV(google_data, 'google-{{figname}}.csv');" class="btn btn-primary"
+                        role="button">Download CSV</a>
+                    <a href="#"
+                        onclick="saveSvgAsPng(document.getElementById('google_graph-svg'), 'google-{{figname}}.png'); return false;"
+                        class="btn btn-primary" role="button">Download PNG</a>
+                </div>
+                <hr>
+
+                % if 'state_legislation' in csv_data:
+                <h3 class="text-center">{{titles['state_legislation']}}</h3>
+                <div id="legis-graph" class="gram-plot"></div>
+                <script>
+                    var legis_data = "{{csv_data['state_legislation']}}";
+                    plotData(legis_data, "legis-graph", "Frequency", false, 960, 500);
+                </script>
+                <div class="download">
+                    <a href="#" onclick="downloadCSV(legis_data, 'legis-{{figname}}.csv');" class="btn btn-primary"
+                        role="button">Download CSV</a>
+                    <a href="#"
+                        onclick="saveSvgAsPng(document.getElementById('legis_graph-svg'), 'legis-{{figname}}.png'); return false;"
+                        class="btn btn-primary" role="button">Download PNG</a>
+                </div>
+                <hr>
+                % end
+
+                % if 'court' in csv_data:
+                <h3 class="text-center">{{titles['court']}}</h3>
+                <div id="court-graph" class="gram-plot"></div>
+                <script>
+                    var court_data = "{{csv_data['court']}}";
+                    plotData(court_data, "court-graph", "Frequency", false, 960, 500);
+                </script>
+                <div class="download">
+                    <a href="#" onclick="downloadCSV(court_data, 'court-{{figname}}.csv');" class="btn btn-primary"
+                        role="button">Download CSV</a>
+                    <a href="#"
+                        onclick="saveSvgAsPng(document.getElementById('court_graph-svg'), 'court-{{figname}}.png'); return false;"
+                        class="btn btn-primary" role="button">Download PNG</a>
+                </div>
+                <hr>
+                % end
+
+                % if 'congressional_record' in csv_data:
+                <h3 class="text-center">{{titles['congressional_record']}}</h3>
+                <div id="cong-graph" class="gram-plot"></div>
+                <script>
+                    var cong_data = "{{csv_data['congressional_record']}}";
+                    plotData(cong_data, "cong-graph", "Frequency", false, 960, 500);
+                </script>
+                <div class="download">
+                    <a href="#" onclick="downloadCSV(cong_data, 'cong-{{figname}}.csv');" class="btn btn-primary"
+                        role="button">Download CSV</a>
+                    <a href="#"
+                        onclick="saveSvgAsPng(document.getElementById('cong_graph-svg'), 'cong-{{figname}}.png'); return false;"
+                        class="btn btn-primary" role="button">Download PNG</a>
+                </div>
+                <hr>
+                % end
+
+                % if 'sec' in csv_data:
+                <h3 class="text-center">{{titles['sec']}}</h3>
+                <div id="sec-graph" class="gram-plot"></div>
+                <script>
+                    var sec_data = "{{csv_data['sec']}}";
+                    plotData(sec_data, "sec-graph", "Frequency", false, 960, 500);
+                </script>
+                <div class="download">
+                    <a href="#" onclick="downloadCSV(sec_data, 'sec-{{figname}}.csv');" class="btn btn-primary"
+                        role="button">Download CSV</a>
+                    <a href="#"
+                        onclick="saveSvgAsPng(document.getElementById('sec_graph-svg'), 'sec-{{figname}}.png'); return false;"
+                        class="btn btn-primary" role="button">Download PNG</a>
+                </div>
+                <hr>
+                % end
+
+                % if 'legsouth' in csv_data:
+                <h3 class="text-center">{{titles['legsouth']}}</h3>
+                <div id="legsouth-graph" class="gram-plot"></div>
+                <script>
+                    var legsouth_data = "{{csv_data['legsouth']}}";
+                    plotData(legsouth_data, "legsouth-graph", "Frequency", false, 960, 500);
+                </script>
+                <div class="download">
+                    <a href="#" onclick="downloadCSV(legsouth_data, 'legsouth-{{figname}}.csv');"
+                        class="btn btn-primary" role="button">Download CSV</a>
+                    <a href="#"
+                        onclick="saveSvgAsPng(document.getElementById('legsouth_graph-svg'), 'legsouth-{{figname}}.png'); return false;"
+                        class="btn btn-primary" role="button">Download PNG</a>
+                </div>
+                <hr>
+                % end
+
+                % if 'courtsouth' in csv_data:
+                <h3 class="text-center">{{titles['courtsouth']}}</h3>
+                <div id="courtsouth-graph" class="gram-plot"></div>
+                <script>
+                    var courtsouth_data = "{{csv_data['courtsouth']}}";
+                    plotData(courtsouth_data, "courtsouth-graph", "Frequency", false, 960, 500);
+                </script>
+                <div class="download">
+                    <a href="#" onclick="downloadCSV(courtsouth_data, 'courtsouth-{{figname}}.csv');"
+                        class="btn btn-primary" role="button">Download CSV</a>
+                    <a href="#"
+                        onclick="saveSvgAsPng(document.getElementById('courtsouth_graph-svg'), 'courtsouth-{{figname}}.png'); return false;"
+                        class="btn btn-primary" role="button">Download PNG</a>
+                </div>
+                % end
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

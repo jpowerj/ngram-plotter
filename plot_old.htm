@@ -1,0 +1,66 @@
+%#template for word plots
+%#takes list of words
+
+%# HTML Style Code
+<style media="screen" type="text/css">
+#content {
+    height: 90%;
+}
+#left {
+    float: left;
+    width: 60%;
+    height: 100%;
+    overflow: auto;
+}
+#right {
+    float: left;
+    width: 40%;
+    height: 100%;
+    overflow: auto;
+}
+</style>
+<h3>
+<center>
+State Laws N-Gram Viewer (Beta)<br></h3>
+<h4><center>Elliott Ash, Suresh Naidu, and Joseph Sutherland<br>
+Princeton University and Columbia University<br></h4>
+<center>Plotted Words: {{figname}}<br>
+
+
+<HR>
+<center>
+
+<h3>Word Frequencies in State Legislation, 1700-2012</h3>
+<img src="http://textlab.econ.columbia.edu/~eash/legis-{{figname}}.png">
+
+<HR>
+
+<h3>Word Frequencies in State Supreme Court Decisions, 1800-2012</h3>
+<img src="http://textlab.econ.columbia.edu/~eash/courts-{{figname}}.png">
+
+<HR>
+
+<h3>Word Frequencies in U.S. Congressional Record, 1858-2015</h3>
+<img src="http://textlab.econ.columbia.edu/~eash/cong-{{figname}}.png">
+
+
+<HR>
+
+<h3>Word Frequencies in Annual 10-K Filings to SEC, 1996-2015</h3>
+<br>
+<img src="http://textlab.econ.columbia.edu/~eash/filings-{{figname}}.png">
+<br>
+
+<HR>
+
+<h3>Word Frequencies in State Legislation by Southern State Status, 1800-2012</h3>
+<img src="http://textlab.econ.columbia.edu/~eash/legis-south-{{figname}}.png">
+
+<HR>
+
+<h3>Word Frequencies in State Supreme Court Decisions by Southern State Status, 1800-2012</h3>
+<img src="http://textlab.econ.columbia.edu/~eash/courts-south-{{figname}}.png">
+
+<HR>
+
+</center>

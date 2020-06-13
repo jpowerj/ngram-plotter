@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Ngram Plotter (Beta)</title>
+<!-- Latest compiled and minified bootstrap CSS+JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+<style>
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+</style>
+</head>
+<body>
+<center>
+<div class="col-lg-5 col-centered">
+<h2>Ngram Plotter</h2>
+<form class="form-horizontal" action="">
+<fieldset>
+<legend>Enter a query (separate words with a comma):</legend>
+<div class="form-group row">
+<div class="col-lg-12">
+<input type="text" name="query" id="query" class="form-control">
+</div> <!-- end col-lg-10 -->
+</div> <!-- end form-group -->
+<legend class="col-form-legend">Choose corpora to plot:</legend>
+<div class="form-group row">
+<div class="col-lg-12" style="text-align:left;">
+    <div class="form-check">
+        <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="corpora[]" value="google" checked>
+        Google Ngrams English, 1800-2000 (Case Sensitive)
+        </label>
+    </div><!-- end form-check -->
+    <div class="form-check">
+        <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="corpora[]" value="coha" checked>
+        Corpus of Historical American English (COHA), 1800-2010
+        </label>
+    </div><!-- end form-check -->
+    <div class="form-check">
+        <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="corpora[]" value="google" checked>
+        Google Ngrams English, 1700-2012
+        </label>
+    </div><!-- end form-check -->
+    <div class="form-check">
+        <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="corpora[]" value="legis" checked>
+        State Legislation, 1700-2012
+        </label>
+    </div><!-- end form-check -->
+    <div class="form-check">
+        <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="corpora[]" value="court" checked>
+        State Supreme Court Decisions, 1800-2012
+        </label>
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="corpora[]" value="cong" checked>
+        U.S. Congressional Record, 1858-2015
+        </label>
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="corpora[]" value="sec" checked>
+        Annual 10-K Filings to SEC, 1996-2015
+        </label>
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="corpora[]" value="legsouth">
+        State Legislation (By Southern State Status), 1800-2012
+        </label>
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="corpora[]" value="courtsouth">
+        State Supreme Court Decisions (By Southern State Status), 1800-2012
+        </label>
+    </div>
+</div> <!-- end col-lg-12 -->
+</div> <!-- end form-group -->
+<div class="form-group">
+<div class="col-lg-12 col-centered">
+<input type="submit" class="btn btn-primary">
+</div>
+</div> <!-- end form-group -->
+</fieldset>
+</form>
+</div> <!-- end container -->
+</center>
+</body>
+</html>
